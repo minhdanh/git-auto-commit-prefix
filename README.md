@@ -1,5 +1,6 @@
-Auto prepend a commit message with a ticket number from current branch. This applies to all your repos. No needs to configure one by one.
-Ticket name should be in format `projectcodename-ticketnumber`.
+Auto prepend a commit message with a ticket name from current branch. This applies to all of your repos. No needs to configure one by one.
+Multi-message commit is also supported.
+Ticket name should be in format `projectname-ticketnumber`
 
 For example:
 ```

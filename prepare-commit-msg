@@ -1,9 +1,18 @@
 #!/bin/bash
 FILE=$1
-MESSAGE=$(cat $FILE)
 TICKET=$(git branch --show-current | grep  -Eo '^(\w+)-[0-9]+' | tr "[:lower:]" "[:upper:]")
-if [[ $TICKET == "" || "$MESSAGE" == "$TICKET"* ]];then
-  exit 0;
-fi
 
-echo "$TICKET | $MESSAGE" > $FILE
+TMP_MESSAGE_FILE=$(mktemp)
+trap "rm -f $TMP_MESSAGE_FILE" EXIT
+
+while IFS='' read -r MESSAGE || [ -n "${MESSAGE}" ]; do
+  if [ ! -z "$MESSAGE" ]; then
+    if [[ $TICKET == "" || "$MESSAGE" == "$TICKET"* ]]; then
+      echo "$MESSAGE" >> $TMP_MESSAGE_FILE
+    else
+      echo "$TICKET | $MESSAGE" >> $TMP_MESSAGE_FILE
+    fi
+  fi
+done < $FILE
+
+mv $TMP_MESSAGE_FILE $FILE
