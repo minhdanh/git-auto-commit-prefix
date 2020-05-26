@@ -12,6 +12,8 @@ while IFS='' read -r MESSAGE || [ -n "${MESSAGE}" ]; do
     else
       echo "$TICKET | $MESSAGE" >> $TMP_MESSAGE_FILE
     fi
+  else
+    echo "" >> $TMP_MESSAGE_FILE
   fi
 done < $FILE
 
