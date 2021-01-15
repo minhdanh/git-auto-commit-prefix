@@ -18,3 +18,8 @@ while IFS='' read -r MESSAGE || [ -n "${MESSAGE}" ]; do
 done < $FILE
 
 mv $TMP_MESSAGE_FILE $FILE
+
+WORKDIR=$(pwd)
+if [ -f $WORKDIR/.git/hooks/pre-commit ]; then
+  $WORKDIR/.git/hooks/pre-commit
+fi
